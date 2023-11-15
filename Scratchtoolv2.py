@@ -1,10 +1,11 @@
 import imageio
-from matplotlib import pyplot as plt
 import cv2
 import numpy as np
-from PIL import Image
+#from PIL import Image
 import math
+import matplotlib
 from matplotlib import pyplot as plt
+matplotlib.use('TkAgg')
 import io
 import natsort
 import glob
@@ -170,21 +171,14 @@ class Scratchtool():
 
     def calc_mask(self, img1):
         self.im1_morphology = cv2.morphologyEx(img1, cv2.MORPH_TOPHAT, self.morphexkernel, 1)
-        #cv2.imwrite("D:/Dateien/FAU/Projekt/scratch_images/masterarbeitbeispiel/testasdf2.png", cv2.morphologyEx(img1, cv2.MORPH_OPEN, self.morphexkernel, 1))
         x, im1_threshold1 = cv2.threshold(self.im1_morphology, 0, int(255), cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)   #treshold1type + value
-        #cv2.imwrite("D:/Dateien/FAU/Projekt/scratch_images/masterarbeitbeispiel/im1_thresh.png", im1_threshold1)
-        #CellTracker.plot_image(im1_threshold1, "im1_thresh2")
         im1_dilation = cv2.erode(im1_threshold1, kernel=self.dilationkernel, iterations=1)
-        #cv2.imwrite("D:/Dateien/FAU/Projekt/scratch_images/masterarbeitbeispiel/im1_dilation.png", im1_dilation)
         self.im1_blur = cv2.blur(im1_dilation, (self.blursize, self.blursize))
-        #cv2.imwrite("D:/Dateien/FAU/Projekt/scratch_images/masterarbeitbeispiel/im1_blur.png", self.im1_blur)
         x, self.im1_threshold2 = cv2.threshold(self.im1_blur, int(self.threshold2val), 255, cv2.THRESH_BINARY)                                    #threshold2type
-        #cv2.imwrite("D:/Dateien/FAU/Projekt/scratch_images/masterarbeitbeispiel/im1_thresh2.png", self.im1_threshold2)
         largest_contour = self.find_largest_contours(self.im1_threshold2)
         self.scaled_contour = self.calc_scale_contour(largest_contour, self.lineartrans)
         self.img_contour = cv2.drawContours(self.imageset[0].copy(), self.scaled_contour.copy(), -1, 255, 10, offset=(-1, -1))
-        #cv2.imwrite("D:/Dateien/FAU/Projekt/scratch_images/masterarbeitbeispiel/im1_contour.png", self.img_contour)
-        #cv2.imwrite("D:/Dateien/FAU/Projekt/Master_presentation_31_08_pp/cell_img/im1_contour.png", self.img_contour)
+
     def calc_imgcalc(self):
         imgmorph = cv2.morphologyEx(self.imageset[-1], cv2.MORPH_TOPHAT, self.morphexkernel, 1)
         x, self.img_calc = cv2.threshold(imgmorph, int(self.threshold3val), 255, cv2.THRESH_BINARY_INV)                            #threshold3type
@@ -221,14 +215,13 @@ class Scratchtool():
             self.im_thresh_scratch_list.append(self.im_thresh_scratch)
             x, im_thresh_background = cv2.threshold(self.im_maskedbackground, int(self.threshold3val), 255, cv2.THRESH_BINARY_INV)           #threshold3type
             noncellscratcharea = np.count_nonzero(self.im_thresh_scratch)
-            #cv2.imwrite("D:/Dateien/FAU/Projekt/Master_presentation_31_08_pp/cell_img/thresh_srcatch.png", self.im_thresh_scratch)
+
             noncellbackgroundarea = np.count_nonzero(im_thresh_background)
             backgrounddens = (self.backgroundarea - noncellbackgroundarea) / self.backgroundarea
             if index == 0:
                 self.backgrounddens_0 = backgrounddens
             scratchdens = (self.scratcharea - noncellscratcharea) / self.scratcharea
             if scaled is True:
-                #migprogress = (scratchdens / backgrounddens) * 100
                 migprogress = (scratchdens / self.backgrounddens_0) * 100
             else:
                 migprogress = scratchdens * 100
@@ -318,4 +311,4 @@ class Scratchtool():
             image = cv2.resize(image, None, fx=resizex, fy=resizey, interpolation=cv2.INTER_AREA)
             image3 = np.hstack((image, self.plotarray))
             self.gif_list.append(image3)
-            imageio.mimsave(self.datapath + "/" + "migrationprogress" + str(list(self.dict)[0]) + ".gif", self.gif_list, duration=0.5)
+            imageio.mimsave(self.datapath + "/" + "migrationprogress" + str(list(self.dict)[0]) + ".gif", self.gif_list, duration=1)
