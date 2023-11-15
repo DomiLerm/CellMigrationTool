@@ -1,0 +1,6 @@
+MorphEx-impact=36
+Dilation(only DAPI)=10
+Blurring=43
+Threshold 2 Min-value=220
+lin. Transformation=1.07
+Threshold final Min-value=11
