@@ -311,4 +311,4 @@ class Scratchtool():
             image = cv2.resize(image, None, fx=resizex, fy=resizey, interpolation=cv2.INTER_AREA)
             image3 = np.hstack((image, self.plotarray))
             self.gif_list.append(image3)
-            imageio.mimsave(self.datapath + "/" + "migrationprogress" + str(list(self.dict)[0]) + ".gif", self.gif_list, duration=1)
+            imageio.mimsave(self.datapath + "/" + "migrationprogress" + str(list(self.dict)[0]) + ".gif", self.gif_list, fps=2, loop=0)
