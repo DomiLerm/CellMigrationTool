@@ -2,7 +2,7 @@
 
 `Cell Migration Tool` is a Python tool that provides an Interface for Cell migration quantification for high throughput microscopy. It was developed as part of the publication "Automated high-throughput live cell monitoring of endothelial cell migration" (Schmidt, Lerm et al.). 
 
-![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+![Alt Text](https://https://github.com/DomiLerm/CellMigrationTool/test_imgs/high_migration/RFP/migrationprogressB2.gif)
 
 # Installation
 
