@@ -217,7 +217,7 @@ def openplotwindow():
     plotwindow.title("Migrationprogressplot")
     plotwindow.configure(background='gray17')
     # frame = tk.Frame(plotwindow)
-    plotwindow.geometry("400x400")
+    plotwindow.geometry("800x800")
     savegifbutton = tk.Button(plotwindow, text="Save Animation", command=savegif, bg="gray17", fg="gray70").pack()
 
     img_tk = ImageTk.PhotoImage(image=Image.fromarray(Scratch.plotarray))
