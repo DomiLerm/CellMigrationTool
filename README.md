@@ -33,3 +33,17 @@ An overview of the different parameters utilized by the application for scratch-
 |     4    |     Threshold-Value      |     Sets   the threshold for the detection of the initial wounded area.                                                                                                                                                                                |
 |     5    |     Linear-scaling       |     Sets   the factor with which the detected wound is scaled to counteract any shrinking of the region induced by the previous analysis steps.                                                                                                        |
 |     6    |     Threshold   final    |     Sets the threshold for the detection of migrated cells in the wound area.      
+
+
+# Data format
+
+This tools expects a an exact data format and labeling. When preparing your dataset make sure to only use .tif images with an appropriate resolution. The folder to be analyzed can contain multiple timelines, however each image must start with a timeline identifier that is followed by an underscore and ends with the given image index. Since this tool was initial developed for RFP and DAPI stained migration assays the filename should include "DAPI" or "RFP", depending on the selected default parameters (e.g A1_-2_1_1_Tsf[Stitched[DAPI 377,447]]_001.tif).
+
+The "test_imgs" folder contains 4 sample timelines that show you the expected naming of the images and can be used for testing.
+
+# Contributing Citing
+
+Please let us know if there is something that does not work, or needs to be changed or if you would like additional features. 
+
+If `CellMigrationTool` contributes to a project that leads to a publication, please acknowledge this by citing the publication.
+      
